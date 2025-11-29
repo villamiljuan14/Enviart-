@@ -5,31 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Enviart</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/css/output.css}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: '#3C50E0',
-                        secondary: '#80CAEE',
-                        dark: '#1A222C',
-                        darker: '#24303F'
-                    }
-                }
-            }
-        }
-    </script>
     <link rel="stylesheet" th:href="@{/css/home.css}">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 </head>
 
-<body class="bg-gray-100 dark:bg-gray-900 text-slate-800 dark:text-slate-200 font-sans transition-colors duration-300">
+<body class="bg-slate-100 dark:bg-gray-900 text-slate-800 dark:text-slate-200 font-sans transition-colors duration-300">
 
     <div class="flex h-screen overflow-hidden">
 
@@ -121,7 +106,9 @@
                         <p class="text-xs text-gray-500 dark:text-gray-400 truncate" th:text="${role}">ROL</p>
                     </div>
                     <form th:action="@{/logout}" method="post">
-                        <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors">
+                        <button type="submit"
+                            class="p-2 text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors shadow-sm"
+                            aria-label="Cerrar sesión" title="Cerrar sesión">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -148,7 +135,7 @@
                     </button>
                     <div class="relative hidden sm:block">
                         <input type="text" placeholder="Buscar..."
-                            class="pl-10 pr-4 py-2 border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:text-white w-64 transition-colors">
+                            class="pl-10 pr-4 py-2 border border-slate-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:text-white w-64 transition-colors">
                         <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -188,13 +175,13 @@
 
             <!-- Main Content -->
             <main
-                class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900 p-6 lg:p-8 transition-colors duration-300">
+                class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-100 dark:bg-gray-900 p-6 lg:p-8 transition-colors duration-300">
 
                 <!-- Top Stats Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <!-- Card 1 -->
                     <div
-                        class="bg-white dark:bg-[#24303F] rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+                        class="bg-white dark:bg-[#24303F] rounded-xl shadow-md p-6 border border-slate-300 dark:border-gray-700">
                         <div class="flex items-center justify-between mb-4">
                             <div class="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-full">
                                 <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -205,8 +192,9 @@
                             <span
                                 class="text-xs font-bold text-green-500 bg-green-100 dark:bg-green-900/20 px-2 py-1 rounded">+20%</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">12,384</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Total Pedidos</p>
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-1" th:text="${totalPedidos}">0
+                        </h3>
+                        <p class="text-sm text-slate-500 dark:text-gray-400">Total Pedidos</p>
                     </div>
 
                     <!-- Card 2 -->
@@ -223,8 +211,9 @@
                             <span
                                 class="text-xs font-bold text-green-500 bg-green-100 dark:bg-green-900/20 px-2 py-1 rounded">+20%</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">728</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">En Tránsito</p>
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-1" th:text="${enTransito}">0
+                        </h3>
+                        <p class="text-sm text-slate-500 dark:text-gray-400">En Tránsito</p>
                     </div>
 
                     <!-- Card 3 -->
@@ -241,8 +230,9 @@
                             <span
                                 class="text-xs font-bold text-green-500 bg-green-100 dark:bg-green-900/20 px-2 py-1 rounded">+12%</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">11,450</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Entregados</p>
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-1" th:text="${entregados}">0
+                        </h3>
+                        <p class="text-sm text-slate-500 dark:text-gray-400">Entregados</p>
                     </div>
                 </div>
 
@@ -274,15 +264,8 @@
                         <div
                             class="bg-white dark:bg-[#24303F] rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700">
                             <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-4">Rastreo en Vivo</h3>
-                            <div
-                                class="h-48 bg-gray-200 dark:bg-gray-700 rounded-lg w-full flex items-center justify-center relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                                    class="absolute inset-0 w-full h-full object-cover opacity-60" alt="Map">
-                                <div class="absolute inset-0 bg-indigo-900/20"></div>
-                                <span
-                                    class="relative z-10 bg-white dark:bg-gray-800 px-3 py-1 rounded-full text-xs font-bold shadow">Mapa
-                                    Interactivo</span>
-                            </div>
+                            <div id="mapaBogota"
+                                class="h-64 bg-gray-200 dark:bg-gray-700 rounded-lg w-full relative z-0"></div>
 
                             <!-- Timeline -->
                             <div class="mt-6">
@@ -326,11 +309,14 @@
                         class="bg-white dark:bg-[#24303F] rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700 flex flex-col justify-between">
                         <div>
                             <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Ingresos Totales</h3>
-                            <h2 class="text-3xl font-bold text-slate-800 dark:text-white mt-2">$23,445,700</h2>
+                            <h2 class="text-3xl font-bold text-slate-800 dark:text-white mt-2"
+                                th:text="'$' + ${#numbers.formatDecimal(ingresosTotales, 0, 'COMMA', 0, 'POINT')}">$0
+                            </h2>
                         </div>
                         <div class="mt-4">
                             <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Envíos Realizados</h3>
-                            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mt-1">9,258</h2>
+                            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mt-1"
+                                th:text="${totalPedidos}">0</h2>
                         </div>
                     </div>
 
@@ -339,7 +325,7 @@
                         <div class="relative z-10">
                             <h3 class="text-lg font-bold opacity-90">Vehículos de Entrega</h3>
                             <p class="text-sm opacity-75">Operando en ruta</p>
-                            <h2 class="text-4xl font-bold mt-4">29</h2>
+                            <h2 class="text-4xl font-bold mt-4" th:text="${totalVehiculos}">0</h2>
                             <p class="text-xs mt-2 bg-white/20 inline-block px-2 py-1 rounded">+3 nuevos esta semana</p>
                             <div class="mt-6 flex items-center gap-2">
                                 <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
@@ -386,6 +372,38 @@
     </div>
 
     <script th:src="@{/js/home.js}"></script>
+
+    <!-- Leaflet JS & Heatmap -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (document.getElementById('mapaBogota')) {
+                var map = L.map('mapaBogota').setView([4.65, -74.09], 11);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: '© OpenStreetMap'
+                }).addTo(map);
+
+                fetch('/api/mapa/datos')
+                    .then(response => response.json())
+                    .then(data => {
+                        var heatData = [];
+                        data.forEach(punto => {
+                            L.marker([punto.lat, punto.lng])
+                                .bindPopup(`<b>${punto.zona}</b><br>Envíos: ${punto.cantidad}`)
+                                .addTo(map);
+                            heatData.push([punto.lat, punto.lng, punto.cantidad]);
+                        });
+                        if (heatData.length > 0) {
+                            L.heatLayer(heatData, { radius: 25, blur: 15, maxZoom: 12 }).addTo(map);
+                        }
+                    })
+                    .catch(err => console.error('Error cargando mapa:', err));
+            }
+        });
+    </script>
 </body>
 
 </html>

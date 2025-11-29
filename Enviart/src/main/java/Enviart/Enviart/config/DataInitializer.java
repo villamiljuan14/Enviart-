@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import Enviart.Enviart.model.optimizada.TipoServicio;
+import Enviart.Enviart.repository.TipoServicioRepository;
 
 import java.util.Optional;
 
@@ -23,13 +25,16 @@ public class DataInitializer implements CommandLineRunner {
     private final RolRepository rolRepository;
     private final UsuarioRepository usuarioRepository;
     private final EnvioRepository envioRepository;
+    private final TipoServicioRepository tipoServicioRepository;
 
     public DataInitializer(PasswordEncoder passwordEncoder, RolRepository rolRepository,
-            UsuarioRepository usuarioRepository, EnvioRepository envioRepository) {
+            UsuarioRepository usuarioRepository, EnvioRepository envioRepository,
+            TipoServicioRepository tipoServicioRepository) {
         this.passwordEncoder = passwordEncoder;
         this.rolRepository = rolRepository;
         this.usuarioRepository = usuarioRepository;
         this.envioRepository = envioRepository;
+        this.tipoServicioRepository = tipoServicioRepository;
     }
 
     @Override
@@ -43,6 +48,7 @@ public class DataInitializer implements CommandLineRunner {
         // Crear usuario administrador por defecto
         // Crear usuario administrador por defecto
         initializeAdminUser();
+        initializeTipoServicios();
 
         // Crear envíos de prueba
         initializeEnvios();
@@ -88,7 +94,7 @@ public class DataInitializer implements CommandLineRunner {
             } else {
                 System.err.println("❌ ERROR: Rol ADMINISTRADOR no existe.");
             }
-            }
+        }
     }
 
     private void initializeEnvios() {
@@ -110,6 +116,43 @@ public class DataInitializer implements CommandLineRunner {
 
                 System.out.println("✅ Envíos de prueba creados.");
             }
+        }
+    }
+
+    private void initializeTipoServicios() {
+        if (tipoServicioRepository.count() == 0) {
+            TipoServicio estandar = new TipoServicio();
+            estandar.setNombre("Estándar");
+            estandar.setCostoBase(new java.math.BigDecimal("15.00"));
+            estandar.setPesoMax(new java.math.BigDecimal("30.00"));
+            estandar.setTiempoEntregaEst("3-5 días hábiles");
+
+            TipoServicio express = new TipoServicio();
+            express.setNombre("Express");
+            express.setCostoBase(new java.math.BigDecimal("30.00"));
+            express.setPesoMax(new java.math.BigDecimal("20.00"));
+            express.setTiempoEntregaEst("1-2 días hábiles");
+
+            TipoServicio sameDay = new TipoServicio();
+            sameDay.setNombre("Same Day");
+            sameDay.setCostoBase(new java.math.BigDecimal("50.00"));
+            sameDay.setPesoMax(new java.math.BigDecimal("10.00"));
+            sameDay.setTiempoEntregaEst("Mismo día");
+
+            TipoServicio economico = new TipoServicio();
+            economico.setNombre("Económico");
+            economico.setCostoBase(new java.math.BigDecimal("10.00"));
+            economico.setPesoMax(new java.math.BigDecimal("50.00"));
+            economico.setTiempoEntregaEst("5-7 días hábiles");
+
+            TipoServicio premium = new TipoServicio();
+            premium.setNombre("Premium");
+            premium.setCostoBase(new java.math.BigDecimal("75.00"));
+            premium.setPesoMax(new java.math.BigDecimal("15.00"));
+            premium.setTiempoEntregaEst("24 horas");
+
+            tipoServicioRepository.saveAll(java.util.List.of(estandar, express, sameDay, economico, premium));
+            System.out.println("✅ Tipos de servicio de envío inicializados.");
         }
     }
 
@@ -136,5 +179,4 @@ public class DataInitializer implements CommandLineRunner {
 
         envioRepository.save(envio);
     }
-    }
-
+}

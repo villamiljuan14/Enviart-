@@ -6,61 +6,17 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function initDarkMode() {
-    // Check for saved user preference, if any, on load
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark');
-    }
-
-    // Find the toggle button (we'll add this ID to the HTML)
+    // We rely on home.js for the actual class toggling and local storage.
+    // Here we just listen for the click to update our charts.
     var themeToggleBtn = document.getElementById('theme-toggle');
-
     if (themeToggleBtn) {
-        var darkIcon = document.getElementById('theme-toggle-dark-icon');
-        var lightIcon = document.getElementById('theme-toggle-light-icon');
-
-        // Initial icon state
-        if (document.documentElement.classList.contains('dark')) {
-            darkIcon.classList.add('hidden');
-            lightIcon.classList.remove('hidden');
-        } else {
-            lightIcon.classList.add('hidden');
-            darkIcon.classList.remove('hidden');
-        }
-
         themeToggleBtn.addEventListener('click', function () {
-            // toggle icons
-            darkIcon.classList.toggle('hidden');
-            lightIcon.classList.toggle('hidden');
-
-            // if set via local storage previously
-            if (localStorage.getItem('color-theme')) {
-                if (localStorage.getItem('color-theme') === 'light') {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                }
-            } else {
-                // if NOT set via local storage previously
-                if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                }
-            }
-
-            // Re-render charts to update colors if needed
-            // This is a bit heavy, but necessary for ApexCharts to pick up new CSS variables or theme
-            // For now, we'll just reload the page or rely on CSS overrides where possible.
-            // ApexCharts has a updateOptions method which is better.
-            updateChartsTheme();
+            // Wait a bit for the class to be toggled by home.js
+            setTimeout(updateChartsTheme, 50);
         });
     }
+    // Initial chart update
+    updateChartsTheme();
 }
 
 function updateChartsTheme() {

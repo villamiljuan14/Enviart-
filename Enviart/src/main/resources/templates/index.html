@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-  <head>
+
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Enviart: mensajería de mercancías rápida, segura y con cobertura nacional en Colombia. Rastrea tus envíos en tiempo real.">
+  <meta name="description"
+    content="Enviart: mensajería de mercancías rápida, segura y con cobertura nacional en Colombia. Rastrea tus envíos en tiempo real.">
   <title>Mensajería de Mercancías – Enviart</title>
   <link rel="preload" as="image" href="/images/bogota-1200.avif">
   <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
+
 <body>
 
   <!-- 🔹 Navbar -->
@@ -37,13 +40,7 @@
     <div id="carousel" class="carousel-slides">
       <!-- Slide 1 (LCP) -->
       <div class="carousel-slide">
-        <img 
-          src="/images/bogota.avif" 
-          alt="Envíos Express"
-          class="slide-image"
-          fetchpriority="high"
-          loading="eager"
-        >
+        <img src="/images/bogota.avif" alt="Envíos Express" class="slide-image" fetchpriority="high" loading="eager">
         <div class="slide-content">
           <h2 class="slide-title">Envíos Express</h2>
           <p class="slide-text">Entrega rápida y segura en todo el país.</p>
@@ -52,12 +49,7 @@
 
       <!-- Slide 2 -->
       <div class="carousel-slide">
-        <img 
-          src="/images/Medellin.avif" 
-          alt="Seguimiento en Tiempo Real"
-          class="slide-image"
-          loading="lazy"
-        >
+        <img src="/images/Medellin.avif" alt="Seguimiento en Tiempo Real" class="slide-image" loading="lazy">
         <div class="slide-content">
           <h2 class="slide-title">Seguimiento en Tiempo Real</h2>
           <p class="slide-text">Monitorea cada paso de tu envío desde nuestro panel.</p>
@@ -66,12 +58,7 @@
 
       <!-- Slide 3 -->
       <div class="carousel-slide">
-        <img 
-          src="/images/cali.avif" 
-          alt="Cobertura Nacional"
-          class="slide-image"
-          loading="lazy"
-        >
+        <img src="/images/cali.avif" alt="Cobertura Nacional" class="slide-image" loading="lazy">
         <div class="slide-content">
           <h2 class="slide-title">Cobertura Nacional</h2>
           <p class="slide-text">Llegamos a todas las ciudades, sin importar el tamaño.</p>
@@ -80,20 +67,16 @@
 
       <!-- Slide 4 -->
       <div class="carousel-slide">
-        <img 
-          src="/images/villa.avif" 
-          alt="Seguridad y Confianza"
-          class="slide-image"
-          loading="lazy"
-        >
+        <img src="/images/villa.avif" alt="Seguridad y Confianza" class="slide-image" loading="lazy">
         <div class="slide-content">
           <h2 class="slide-title">Seguridad y Confianza</h2>
           <p class="slide-text">Tu carga protegida de principio a fin.</p>
         </div>
       </div>
     </div>
-    <button id="prev" class="carousel-btn prev-btn"><</button>
-    <button id="next" class="carousel-btn next-btn">></button>
+    <button id="prev" class="carousel-btn prev-btn">
+      << /button>
+        <button id="next" class="carousel-btn next-btn">></button>
   </section>
 
   <!-- 🔹 Sección de Cards -->
@@ -171,4 +154,5 @@
   <!-- Script estático -->
   <script th:src="@{/js/script.js}"></script>
 </body>
+
 </html>

@@ -31,3 +31,13 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Node modules ###
+node_modules/
+
+### Tailwind standalone binary ###
+tailwindcss
+
+### NPM ###
+package-lock.json
+.npm/

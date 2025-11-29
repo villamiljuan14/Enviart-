@@ -118,8 +118,12 @@ const updateChartTheme = () => {
     }
 };
 
-const chart = new ApexCharts(document.querySelector("#deliveryChart"), options);
-chart.render();
+let chart;
+const chartElement = document.querySelector("#deliveryChart");
+if (chartElement) {
+    chart = new ApexCharts(chartElement, options);
+    chart.render();
+}
 
 // Listen for theme toggle to update chart
 themeToggleBtn.addEventListener('click', () => {

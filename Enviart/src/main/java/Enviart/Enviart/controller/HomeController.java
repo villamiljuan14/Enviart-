@@ -8,6 +8,12 @@ import Enviart.Enviart.model.Rol;
 import Enviart.Enviart.util.validation.PasswordValidator;
 import Enviart.Enviart.util.enums.TipoDocumento;
 import Enviart.Enviart.util.enums.TipoRol;
+import Enviart.Enviart.util.enums.TipoDocumento;
+import Enviart.Enviart.util.enums.TipoRol;
+import Enviart.Enviart.util.enums.EstadoEnvio;
+import Enviart.Enviart.repository.EnvioRepository;
+import Enviart.Enviart.repository.VehiculoRepository;
+import java.math.BigDecimal;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +36,16 @@ public class HomeController {
 
     private final UsuarioService usuarioService;
     private final RolRepository rolRepository;
+    private final EnvioRepository envioRepository;
+    private final VehiculoRepository vehiculoRepository;
 
     @Autowired
-    public HomeController(UsuarioService usuarioService, RolRepository rolRepository) {
+    public HomeController(UsuarioService usuarioService, RolRepository rolRepository,
+            EnvioRepository envioRepository, VehiculoRepository vehiculoRepository) {
         this.usuarioService = usuarioService;
         this.rolRepository = rolRepository;
+        this.envioRepository = envioRepository;
+        this.vehiculoRepository = vehiculoRepository;
     }
 
     // --- Rutas Públicas ---
@@ -158,6 +169,22 @@ public class HomeController {
             // Lógica para ADMINISTRADOR (y otros roles por defecto)
             // Agregar estadísticas reales
             model.addAttribute("totalUsuarios", usuarioService.listarUsuarios().size());
+
+            // Estadísticas Dashboard
+            long totalPedidos = envioRepository.count();
+            long enTransito = envioRepository.countByEstado(EstadoEnvio.EN_TRANSITO);
+            long entregados = envioRepository.countByEstado(EstadoEnvio.ENTREGADO);
+            BigDecimal ingresos = envioRepository.sumTotalTarifa();
+            if (ingresos == null)
+                ingresos = BigDecimal.ZERO;
+            long totalVehiculos = vehiculoRepository.count();
+
+            model.addAttribute("totalPedidos", totalPedidos);
+            model.addAttribute("enTransito", enTransito);
+            model.addAttribute("entregados", entregados);
+            model.addAttribute("ingresosTotales", ingresos);
+            model.addAttribute("totalVehiculos", totalVehiculos);
+
             return "home";
         }
         return "redirect:/login";

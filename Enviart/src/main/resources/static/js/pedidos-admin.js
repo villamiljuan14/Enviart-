@@ -12,7 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 infoFiltered: "(filtrado de _MAX_ pedidos totales)"
             },
             columnDefs: [
-                { targets: 7, orderable: false }
+                { targets: 5, orderable: false }, // Total column
+                { targets: 7, orderable: false }  // Acciones column
+            ],
+            columns: [
+                null, null, null, null, null, null, null, null
             ]
         });
     }

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-EnviartApplication<Enviart>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "Enviart.Enviart.EnviartApplication",
+            "projectName": "Enviart",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

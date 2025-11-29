@@ -18,6 +18,8 @@ public interface EnvioRepository extends JpaRepository<Envio, Integer> {
 
     List<Envio> findByEstado(EstadoEnvio estado);
 
+    long countByEstado(EstadoEnvio estado);
+
     List<Envio> findByTransportista(Usuario transportista);
 
     List<Envio> findByUsuarioRegistro(Usuario usuarioRegistro);
